@@ -26,21 +26,22 @@ function initializeCanvas(): void {
 }
 
 function resizeCanvas(): void {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  if (!canvas) return;
 
-  // the font looks like shit but I can't get this to work.
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
-  //const dpr = window.devicePixelRatio;
-  //const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio;
 
-  //canvas.width = rect.width * dpr;
-  //canvas.height = rect.height * dpr;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
 
-  //ctx.scale(dpr, dpr);
+  ctx.scale(dpr, dpr);
 
-  //canvas.style.width = `${rect.width}px`;
-  //canvas.style.height = `${rect.height}px`;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
 }
 
 function initializeScenes(): void {

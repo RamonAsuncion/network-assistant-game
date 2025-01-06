@@ -52,6 +52,7 @@ export class MenuScene implements Scene {
   }
 
   private initializeButtons(): void {
+    const dpr = window.devicePixelRatio;
     const buttonWidth = 200;
     const buttonHeight = 50;
     const spacing = 20;
@@ -75,17 +76,19 @@ export class MenuScene implements Scene {
   }
 
   private drawTitle(ctx: CanvasRenderingContext2D): void {
-    const centerX = Math.floor(ctx.canvas.width / 2);
-    const centerY = 150;
+    const dpr = window.devicePixelRatio;
+    const centerX = ctx.canvas.width / (2 * dpr);
+    const centerY = 200;
     ctx.fillStyle = "#FFD700";
-    ctx.font = "bold 54px Helvetica, Arial, sans-serif";
+    ctx.font = "bold 40px Helvetica, Arial, sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("Network Assistant: A Day in the Life", centerX, centerY);
+    ctx.fillText("Network Navigator", centerX, centerY);
   }
 
   private drawButtons(ctx: CanvasRenderingContext2D): void {
-    const centerX = Math.floor(ctx.canvas.width / 2);
+    const dpr = window.devicePixelRatio;
+    const centerX = ctx.canvas.width / (2 * dpr);
     this.buttons.forEach((button, index) => {
       button.x = Math.floor(centerX - button.width / 2);
       const isHovered = index === this.hoveredButtonIndex;
@@ -93,17 +96,17 @@ export class MenuScene implements Scene {
     });
   }
 
-
   private drawButton(ctx: CanvasRenderingContext2D, button: Rectangle, isHovered: boolean): void {
+    const dpr = window.devicePixelRatio;
     button.x = Math.floor(button.x);
     button.y = Math.floor(button.y);
     ctx.fillStyle = isHovered ? "#1E90FF" : "#4CAF50";
     ctx.fillRect(button.x, button.y, button.width, button.height);
     ctx.strokeStyle = "#FFFFFF";
-    ctx.lineWidth = 2;
+    ctx.lineWidth = (2);
     ctx.strokeRect(button.x, button.y, button.width, button.height);
     ctx.fillStyle = "#FFFFFF";
-    ctx.font = "18px Helvetica, Arial, sans-serif";
+    ctx.font = `${18}px Helvetica, Arial, sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(button.text, button.x + button.width / 2, button.y + button.height / 2);
