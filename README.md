@@ -1,3 +1,5 @@
-# Network Assistant: A Day in the Life
+# Network Navigator
 
 npm run start
+
+
