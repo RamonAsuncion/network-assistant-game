@@ -3,53 +3,53 @@ export interface Scene {
   update(): void;
   render(ctx: CanvasRenderingContext2D): void;
   exit(): void;
-  onMouseEvent?(type: 'mouseevent' | 'click', pos: Point): void;
+  onMouseEvent?(type: 'mousemove' | 'click', pos: Point): void;
 }
 
 export class SceneManager {
-  private scenes: Map<string, Scene> = new Map();
-  private currentScene: Scene | null = null;
+  private _scenes: Map<string, Scene> = new Map();
+  private _currentScene: Scene | null = null;
 
   registerScene(name: string, scene: Scene): void {
-    this.scenes.set(name, scene);
+    this._scenes.set(name, scene);
   }
 
   switchSceneByName(name: string): void {
-    const scene = this.scenes.get(name);
+    const scene = this._scenes.get(name);
     if (scene) {
-      if (this.currentScene) {
-        this.currentScene.exit();
+      if (this._currentScene) {
+        this._currentScene.exit();
       }
-      this.currentScene = scene;
-      this.currentScene.enter();
+      this._currentScene = scene;
+      this._currentScene.enter();
     } else {
       console.error(`Scene ${name} not found.`)
     }
   }
 
   switchScene(scene: Scene): void {
-    if (this.currentScene) {
-      this.currentScene.exit();
+    if (this._currentScene) {
+      this._currentScene.exit();
     }
-    this.currentScene = scene;
-    this.currentScene.enter();
+    this._currentScene = scene;
+    this._currentScene.enter();
   }
 
   update(): void {
-    if (this.currentScene) {
-      this.currentScene.update();
+    if (this._currentScene) {
+      this._currentScene.update();
     }
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    if (this.currentScene) {
-      this.currentScene.render(ctx);
+    if (this._currentScene) {
+      this._currentScene.render(ctx);
     }
   }
 
-  handleMouseEvent(type: 'mouseevent' | 'click', pos: Point): void {
-    if (this.currentScene && this.currentScene.onMouseEvent) {
-      this.currentScene.onMouseEvent(type, pos);
+  handleMouseEvent(type: 'mousemove' | 'click', pos: Point): void {
+    if (this._currentScene && this._currentScene.onMouseEvent) {
+      this._currentScene.onMouseEvent(type, pos);
     }
   }
 }

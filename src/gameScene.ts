@@ -1,4 +1,4 @@
-import { Scene } from "./sceneManager";
+import { Scene } from "./sceneManager.js";
 
 export class GameScene implements Scene {
   enter(): void {

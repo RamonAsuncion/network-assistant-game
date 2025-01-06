@@ -20,47 +20,37 @@ function initializeCanvas(): void {
   canvas = document.createElement('canvas');
   document.body.appendChild(canvas);
   ctx = canvas.getContext('2d')!;
+  resizeCanvas();
 
+  window.addEventListener('resize', resizeCanvas, false);
+}
+
+function resizeCanvas(): void {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  canvas.addEventListener('mousemove', (event) => handleMouseEvent('mouseevent', event));
-  canvas.addEventListener('click', (event) => handleMouseEvent('click', event));
+  // the font looks like shit but I can't get this to work.
+
+  //const dpr = window.devicePixelRatio;
+  //const rect = canvas.getBoundingClientRect();
+
+  //canvas.width = rect.width * dpr;
+  //canvas.height = rect.height * dpr;
+
+  //ctx.scale(dpr, dpr);
+
+  //canvas.style.width = `${rect.width}px`;
+  //canvas.style.height = `${rect.height}px`;
 }
 
 function initializeScenes(): void {
-  const menuScene = new MenuScene();
+  const menuScene = new MenuScene(sceneManager, canvas);
   const gameScene = new GameScene();
 
   sceneManager.registerScene('menu', menuScene);
   sceneManager.registerScene('game', gameScene);
 
   sceneManager.switchSceneByName('menu');
-}
-
-function handleMouseEvent(type: 'mouseevent' | 'click', event: MouseEvent): void {
-  const mousePos = getMousePosition(canvas, event);
-  sceneManager.handleMouseEvent(type, mousePos);
-}
-
-// rewrite for mouse event because i want to be handling it also in like the
-// main menu to be able to click on the option
-
-function getMousePosition(canvas: HTMLCanvasElement, event: MouseEvent): Point {
-  const rect = canvas.getBoundingClientRect()
-  return {
-    x: event.clientX - rect.left,
-    y: event.clientY - rect.top,
-  };
-}
-
-function isInsideRect(pos: Point, rect: Rectangle): boolean {
-  return (
-    pos.x > rect.x &&
-    pos.x < rect.x + rect.width &&
-    pos.y < rect.y + rect.height &&
-    pos.y > rect.y
-  );
 }
 
 function startGameLoop(): void {
