@@ -51,7 +51,9 @@ function initializeScenes(): void {
   sceneManager.registerScene('menu', menuScene);
   sceneManager.registerScene('game', gameScene);
 
-  sceneManager.switchSceneByName('menu');
+  // focusing on actual mechanics now
+  sceneManager.switchSceneByName('game');
+  //sceneManager.switchSceneByName('menu');
 }
 
 function startGameLoop(): void {
